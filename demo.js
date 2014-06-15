@@ -1,9 +1,11 @@
+// sam h -- jsplumb demo for blinex.com team
+
 jsPlumb.ready(function() {
 					
 	// setup some defaults for jsPlumb.	
 	var instance = jsPlumb.getInstance({
 		Endpoint : ["Dot", {radius:5}],
-		HoverPaintStyle : {strokeStyle:"#1e8151", lineWidth:12 },
+		HoverPaintStyle : {strokeStyle:"red", lineWidth:4 },
 		ConnectionOverlays : [
 			[ "Arrow", { 
 				location:1,
@@ -92,6 +94,119 @@ jsPlumb.ready(function() {
 	instance.connect({ source:"phone2", target:"inperson" });
 	instance.connect({ source:"inperson", target:"rejected" });
 
-	jsPlumb.fire("jsPlumbDemoLoaded", instance);
+	//jsPlumb.fire("jsPlumbDemoLoaded", instance);
+
+
+
+
+
+
+
+
+
+//save the chart 
+
+function saveState() {
+    var nodes = [];
+    $(".w").each(function (idx, elem) {
+    var $elem = $(elem);
+    nodes.push({
+        blockId: $elem.attr('id'),
+        positionX: parseInt($elem.css("left"), 10),
+        positionY: parseInt($elem.css("top"), 10)
+    });
+});
+
+       
+
+    //var connectionList = instance.getConnections();
+    //console.log(connectionList);
+
+
+    var connections = [];
+    $.each(instance.getConnections(), function (idx, connection) {
+      
+      connections.push({
+      connectionId: connection.id,
+      pageSourceId: connection.sourceId,
+      pageTargetId: connection.targetId,
+      anchors: $.map(connection.endpoints, function(endpoint) {
+        //console.log(endpoint.anchor);
+        return [[
+        endpoint.anchor.x, 
+        endpoint.anchor.y  
+        //endpoint.anchor.orientation[0], 
+        //endpoint.anchor.orientation[1],
+        //endpoint.anchor.offsets[0],
+        //endpoint.anchor.offsets[1]
+        ]];
+
+      })
+    });
+  });
+
+    var flowChart = {};
+    flowChart.nodes = nodes;
+    flowChart.connections = connections; 
+
+    var flowChartJson = JSON.stringify(flowChart);
+    //console.log(flowChartJson); 
+    $('#jsonOutput').text(flowChartJson);
+}
+
+
+
+
+
+
+	//load the chart
+	function loadState() {
+
+        try {
+		var data = $.parseJSON($("#jsonOutput").html());
+
+		if(typeof data == 'object') {
+		   clearState(); 
+		   loadData(data);
+		   $("#items").html("done.");
+		}  
+	} catch(err) {
+                $("#items").html("no JSON found");		
+	}
+
+
+        //console.log(data); 
+      
+ 
+	function loadData(data) {
+		
+
+
+		//make the connections
+		$.each(data.connections, function( index, elem ) {
+		var connectionLoad = instance.connect({
+		source: elem.pageSourceId,
+		target: elem.pageTargetId,
+		anchors: elem.anchors
+		});
+		 
+		});
+        }
+
+	}
+
+
+	//clear all connections
+        function clearState() {
+           instance.detachEveryConnection();       
+ 	}
+
+
+
+	$("#save").click(function() {saveState();});
+	$("#load").click(function() {loadState();});
+	$("#clear").click(function() {clearState();});
+
+
 
 });

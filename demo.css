@@ -5,7 +5,7 @@ body {
 div#january{ 
         float: left;
         width: 45%;
-        height: 600px;  
+        height: 300px;  
         padding: 10px;
 }
 
@@ -13,13 +13,18 @@ div#january{
 div#february{ 
         float: right;
         width: 45%;
-        height: 600px;  
+        height: 300px;  
         border-left: 2px dotted black;
         padding: 10px;
 }
 
-
-#demo {
+div#items {
+        width: 100%;
+        clear: all;
+        border-top: 2px dotted black;
+        padding: 10px;
+}
+#main {
 	margin-top:5em;
 }
 

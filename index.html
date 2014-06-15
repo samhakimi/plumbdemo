@@ -11,30 +11,38 @@
 	<div id="menu">
 	<button id="save" type="button">save</button>
         <button id="load" type="button">load</button>
-        <div id="jsonOutput"></div>
+        <button id="clear" type="button">clear</button>
 	</div>
+        <div id="items"></div>
+
     <div id="main">
             <!-- demo -->
             <div class="demo statemachine-demo" id="statemachine-demo">
                 <div id="january">January:
+
                 <div class="w" id="opened">Jan:BEGIN<div class="ep"></div></div>
                 <div class="w" id="phone1">Jan:PHONE INTERVIEW 1<div class="ep"></div></div>
-                <div class="w" id="phone2">Jan:PHONE INTERVIEW 2<div class="ep"></div></div>
-                </div>
+                <div class="w" id="phone2">Jan:PHONE INTERVIEW 2<div class="ep"></div></div></div>
                 <div id="february">February:
                 <div class="w" id="inperson">Feb:IN PERSON<div class="ep"></div></div>
-                <div class="w" id="rejected">Feb:REJECTED<div class="ep"></div></div>                           
-                </div>
+                <div class="w" id="rejected">Feb:REJECTED<div class="ep"></div></div></div> 
+
+
+
+
+
             </div>
             <!-- /demo -->
         </div>
 
-
+        <div id="jsonOutput"></div>
+ 
 
     <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="js/jquery-ui-1.10.4.min.js"></script>
     <script type="text/javascript" src="js/jquery.jsPlumb-1.6.2-min.js"></script>
-    <script src="demo.js"></script> 
-    <script src="saveload.js"></script> 
+    <script src="demo.js"></script>  
+
+ 
   </body>
 </html>
