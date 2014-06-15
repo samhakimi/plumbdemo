@@ -10,18 +10,19 @@ jsPlumb.ready(function() {
 			[ "Arrow", { 
 				location:1,
 				id:"arrow",
-                length:15,
-                foldback:0.35
+             			length:15,
+             			foldback:0.35
 			} ],
-            [ "Label", { label:"connection", id:"label", cssClass:"aLabel" }]
+                        //[ "Label", { label:"connection", id:"label", cssClass:"aLabel" }]
 		],
 		Container:"statemachine-demo"
 	});
 
-	var windows = jsPlumb.getSelector(".statemachine-demo .w");
+	var windows = jsPlumb.getSelector(".w");
 
     // initialise draggable elements.  
 	instance.draggable(windows, {containment:"parent"});
+         
 
     // bind a click listener to each connection; the connection is deleted. you could of course
 	// just do this: jsPlumb.bind("click", jsPlumb.detach), but I wanted to make it clear what was
@@ -34,10 +35,10 @@ jsPlumb.ready(function() {
 	// just the new connection - see the documentation for a full list of what is included in 'info'.
 	// this listener sets the connection's internal
 	// id as the label overlay's text.
-    instance.bind("connection", function(info) {
+ /* instance.bind("connection", function(info) {
 		info.connection.getOverlay("label").setLabel(info.connection.id);
     });
-
+*/
 
 	// suspend drawing and initialise.
 	instance.doWhileSuspended(function() {
@@ -61,26 +62,11 @@ jsPlumb.ready(function() {
 				connectorStyle:{ strokeStyle:"#5c96bc", lineWidth:3, outlineColor:"transparent", outlineWidth:4 },
 				maxConnections:3,
 				onMaxConnections:function(info, e) {
-					alert("Maximum connections (" + info.maxConnections + ") reached");
+				alert("Maximum connections (" + info.maxConnections + ") reached");
 				}
 			});
 		}
-		else {
-			var eps = jsPlumb.getSelector(".ep");
-			for (var i = 0; i < eps.length; i++) {
-				var e = eps[i], p = e.parentNode;
-				instance.makeSource(e, {
-					parent:p,
-					anchor:"Continuous",
-					connector:[ "StateMachine", { curviness:20 } ],
-					connectorStyle:{ strokeStyle:"#5c96bc",lineWidth:2, outlineColor:"transparent", outlineWidth:4 },
-					maxConnections:3,
-					onMaxConnections:function(info, e) {
-						alert("Maximum connections (" + info.maxConnections + ") reached");
-					}
-				});
-			}
-		}
+		 
 	});
 
 	// initialise all '.w' elements as connection targets.
@@ -94,33 +80,27 @@ jsPlumb.ready(function() {
 	instance.connect({ source:"phone2", target:"inperson" });
 	instance.connect({ source:"inperson", target:"rejected" });
 
-	//jsPlumb.fire("jsPlumbDemoLoaded", instance);
+	 
+	instance.repaintEverything();
 
 
 
 
+	//save the chart 
 
-
-
-
-
-//save the chart 
-
-function saveState() {
-    var nodes = [];
-    $(".w").each(function (idx, elem) {
-    var $elem = $(elem);
-    nodes.push({
-        blockId: $elem.attr('id'),
-        positionX: parseInt($elem.css("left"), 10),
-        positionY: parseInt($elem.css("top"), 10)
-    });
-});
+	function saveState() {
+	    var nodes = [];
+	    $(".w").each(function (idx, elem) {
+	    var $elem = $(elem);
+	    nodes.push({
+		blockId: $elem.attr('id'),
+		positionX: parseInt($elem.css("left"), 10),
+		positionY: parseInt($elem.css("top"), 10)
+	    });
+	});
 
        
-
-    //var connectionList = instance.getConnections();
-    //console.log(connectionList);
+ 
 
 
     var connections = [];
@@ -134,7 +114,8 @@ function saveState() {
         //console.log(endpoint.anchor);
         return [[
         endpoint.anchor.x, 
-        endpoint.anchor.y  
+        endpoint.anchor.y
+        //not present with dynamic anchors  
         //endpoint.anchor.orientation[0], 
         //endpoint.anchor.orientation[1],
         //endpoint.anchor.offsets[0],
@@ -149,8 +130,7 @@ function saveState() {
     flowChart.nodes = nodes;
     flowChart.connections = connections; 
 
-    var flowChartJson = JSON.stringify(flowChart);
-    //console.log(flowChartJson); 
+    var flowChartJson = JSON.stringify(flowChart); 
     $('#jsonOutput').text(flowChartJson);
 }
 
@@ -174,20 +154,22 @@ function saveState() {
                 $("#items").html("no JSON found");		
 	}
 
-
-        //console.log(data); 
+ 
       
  
 	function loadData(data) {
 		
-
+		//position the elements
+		$.each(data.nodes, function( index, elem ) {
+		$( "div#" + elem.blockId ).offset({ top: elem.positionY+10, left: elem.positionX+10 });
+		});
 
 		//make the connections
 		$.each(data.connections, function( index, elem ) {
-		var connectionLoad = instance.connect({
+		var connectionLoad = instance.connect({ 
 		source: elem.pageSourceId,
 		target: elem.pageTargetId,
-		anchors: elem.anchors
+		anchors: elem.anchors 
 		});
 		 
 		});
@@ -206,7 +188,12 @@ function saveState() {
 	$("#save").click(function() {saveState();});
 	$("#load").click(function() {loadState();});
 	$("#clear").click(function() {clearState();});
-
+      
+        //start with a good looking chart
+	loadState();
 
 
 });
+
+
+

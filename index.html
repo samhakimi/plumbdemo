@@ -8,35 +8,32 @@
   </head>  
 
   <body>
-	<div id="menu">
-	<button id="save" type="button">save</button>
-        <button id="load" type="button">load</button>
-        <button id="clear" type="button">clear</button>
-	</div>
-        <div id="items"></div>
 
     <div id="main">
             <!-- demo -->
             <div class="demo statemachine-demo" id="statemachine-demo">
                 <div id="january">January:
-
-                <div class="w" id="opened">Jan:BEGIN<div class="ep"></div></div>
-                <div class="w" id="phone1">Jan:PHONE INTERVIEW 1<div class="ep"></div></div>
-                <div class="w" id="phone2">Jan:PHONE INTERVIEW 2<div class="ep"></div></div></div>
+ 		<div class="w jan" id="opened">Jan:BEGIN<div class="ep"></div></div>
+                <div class="w jan" id="phone1">Jan:PHONE 1<div class="ep"></div></div>
+                <div class="w jan" id="phone2">Jan:INTERVIEW 2<div class="ep"></div></div>
+ 		</div>
                 <div id="february">February:
-                <div class="w" id="inperson">Feb:IN PERSON<div class="ep"></div></div>
-                <div class="w" id="rejected">Feb:REJECTED<div class="ep"></div></div></div> 
-
-
-
-
+                <div class="w feb" id="inperson">Feb:IN PERSON<div class="ep"></div></div>
+                <div class="w feb" id="rejected">Feb:ACCEPTED<div class="ep"></div></div>
+		</div>  
 
             </div>
             <!-- /demo -->
         </div>
 
-        <div id="jsonOutput"></div>
- 
+	<div id="menu">
+	<button id="save" type="button">save</button>
+        <button id="load" type="button">load</button>
+        <button id="clear" type="button">clear</button>
+
+        <div id="items"></div>
+	</div>
+         <div id="jsonOutput">{"nodes":[{"blockId":"opened","positionX":110,"positionY":55},{"blockId":"phone1","positionX":114,"positionY":166},{"blockId":"phone2","positionX":111,"positionY":262},{"blockId":"inperson","positionX":431,"positionY":78},{"blockId":"rejected","positionX":450,"positionY":255}],"connections":[{"connectionId":"con_65","pageSourceId":"opened","pageTargetId":"phone1","anchors":[[null,null],[null,null]]},{"connectionId":"con_70","pageSourceId":"phone2","pageTargetId":"inperson","anchors":[[null,null],[null,null]]},{"connectionId":"con_75","pageSourceId":"inperson","pageTargetId":"rejected","anchors":[[null,null],[null,null]]}]}</div>
 
     <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="js/jquery-ui-1.10.4.min.js"></script>

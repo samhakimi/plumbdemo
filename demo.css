@@ -4,7 +4,7 @@ body {
 
 div#january{ 
         float: left;
-        width: 45%;
+        width: 280px;
         height: 300px;  
         padding: 10px;
 }
@@ -12,20 +12,22 @@ div#january{
 
 div#february{ 
         float: right;
-        width: 45%;
+        width: 280px;
         height: 300px;  
         border-left: 2px dotted black;
         padding: 10px;
 }
 
+
+
+
 div#items {
         width: 100%;
-        clear: all;
-        border-top: 2px dotted black;
+        clear: all; 
         padding: 10px;
 }
-#main {
-	margin-top:5em;
+#main { 
+        width: 650px;
 }
 
 .w { 	
@@ -49,6 +51,12 @@ div#items {
 	-webkit-transition:background-color 0.25s ease-in;
 	-moz-transition:background-color 0.25s ease-in;
 	transition:background-color 0.25s ease-in;	
+}
+
+
+.jan {
+
+	background-color:silver;
 }
 
 .w:hover {
@@ -81,8 +89,8 @@ div#items {
 	position:absolute;
 	bottom: 37%;
 	right: 5px;
-	width:2em;
-	height:2em;
+	width:1em;
+	height:1em;
 	background-color:orange;
 	cursor:pointer;
 	box-shadow: 0px 0px 2px black;
@@ -98,6 +106,10 @@ div#items {
 
 .statemachine-demo ._jsPlumb_endpoint {
 	z-index:3;
+}
+
+.statemachine-demo {
+	position:relative
 }
 
 #opened {
